@@ -92,7 +92,7 @@ from orders o join employees e on (o.employee_id = e.employee_id)
 where (extract(month from o.shipped_date) = 12 and extract(day from o.shipped_date) = 25)
 or (extract(month from o.order_date) = 12 and extract(day from o.order_date) = 25) group by e.employee_id ;
 
---¿Qué productos mandamos en navidad?
+--¿Qué productos mandamos en navidad? Navidad solo es el 25, el 24 es Noche Buena
 select p.product_name productos from products p 
 join order_details od on (p.product_id = od.product_id) 
 join orders o on (od.order_id = o.order_id)
