@@ -70,8 +70,8 @@ order by p.category_id asc;
 select reorder_level,  product_name producto, product_id id_producto, units_in_stock
 from products p order by reorder_level desc;
 
---¿A donde va nuestro envío más voluminoso?
-select od.quantity cantida_maxima, o.ship_country pais
+--¿A donde va nuestro envío más voluminoso? --Dirección
+select od.quantity cantida_maxima, o.ship_country pais, o.ship_address dirección
 from order_details od join orders o on (od.order_id = o.order_id)
 order by od.quantity desc limit 1;
 
