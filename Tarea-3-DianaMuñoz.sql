@@ -1,13 +1,13 @@
---C”MO OBTENEMOS TODOS LOS NOMBRES Y CORREOS DE NUESTROS CLIENTES CANADIENSES PARA 
---UNA CAMPA—A?
---SoluciÛn con where
+--C√ìMO OBTENEMOS TODOS LOS NOMBRES Y CORREOS DE NUESTROS CLIENTES CANADIENSES PARA 
+--UNA CAMPA√ëA?
+--Soluci√≥n con where
 select c.first_name || ' ' || c.last_name as nombres, c.email correos, c3.country pais
 from customer c join address a using (address_id)
 join city c2 using (city_id)
 join country c3 using (country_id)
 where c3.country = 'Canada'
 order by 1 asc;
---SoluciÛn con group by y having
+--Soluci√≥n con group by y having
 select c.first_name || ' ' || c.last_name as nombres, c.email correos, c3.country pais
 from customer c join address a using (address_id)
 join city c2 using (city_id)
@@ -16,7 +16,7 @@ group by c.customer_id, c3.country_id
 having c3.country = 'Canada'
 order by 1 asc;
 
---øQU… CLIENTE HA RENTADO M¡S DE NUESTRA SECCI”N DE ADULTOS? *Hacerlo con max
+--¬øQU√â CLIENTE HA RENTADO M√ÅS DE NUESTRA SECCI√ìN DE ADULTOS? *Hacerlo con max
 --POR UNIDADES
 --Usando where
 select c.first_name || ' ' || c.last_name full_name, count(r.customer_id)
@@ -26,7 +26,7 @@ join customer c using(customer_id)
 where f.rating = 'NC-17'
 group by c.customer_id 
 order by 2 desc
-limit 2;
+limit 1;
 --Usando having
 select c.first_name || ' ' || c.last_name nombre, count(r.customer_id) as total
 from film f join inventory i using(film_id) 
@@ -35,7 +35,11 @@ join customer c using(customer_id)
 group by c.customer_id, f.rating  
 having f.rating = 'NC-17'
 order by 2 desc
-limit 2;
+limit 1;
+
+--*NOTA: Al usar estas 2 formas salieron 2 personas diferentes, resulta que hay 2 personas que han rentado
+--el mismo n√∫mero de pel√≠culas y ese es el m√°ximo, por tanto, cualquier respuesta estar√≠a bien.
+
 --POR TOTAL EN $$
 select c.first_name || ' ' || c.last_name nombre, sum(p.amount) as total
 from film f join inventory i using(film_id) 
@@ -47,8 +51,8 @@ group by c.customer_id
 order by 2 desc
 limit 1;
 
---øQU… PELÕCULAS SON LAS M¡S RENTADAS EN TODAS NUESTRAS STORES?
---Aunque sean 2 tiendas es m·s f·cil identificar a la tienda por pais que por id
+--¬øQU√â PEL√çCULAS SON LAS M√ÅS RENTADAS EN TODAS NUESTRAS STORES?
+--*NOTA: Aunque sean 2 tiendas es m√°s f√°cil identificar a la tienda por pais que por id
 select distinct on (s.store_id) s.store_id tienda, c2.country pais, f.title pelicula, count(f.film_id) as total 
 from film f join inventory i using(film_id)
 join rental r using(inventory_id)
@@ -59,8 +63,8 @@ join country c2 using (country_id)
 group by s.store_id, c2.country_id, f.film_id
 order by 1,4 desc;
 
---øCU¡L ES NUESTRO REVENUE POR STORE?
---Aunque sean 2 tiendas es m·s f·cil identificar a la tienda por pais que por id
+--¬øCU√ÅL ES NUESTRO REVENUE POR STORE?
+--*NOTA: Aunque sean 2 tiendas es m√°s f√°cil identificar a la tienda por pais que por id
 select i.store_id tienda, c2.country pais, sum(p.amount)
 from inventory i join rental r using(inventory_id)
 join payment p using(rental_id)
