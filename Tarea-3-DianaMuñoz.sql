@@ -16,7 +16,7 @@ group by c.customer_id, c3.country_id
 having c3.country = 'Canada'
 order by 1 asc;
 
---¿QUÉ CLIENTE HA RENTADO MÁS DE NUESTRA SECCIÓN DE ADULTOS? *Hacerlo con max
+--¿QUÉ CLIENTE HA RENTADO MÁS DE NUESTRA SECCIÓN DE ADULTOS? 
 --POR UNIDADES
 --Usando where
 select c.first_name || ' ' || c.last_name full_name, count(r.customer_id)
